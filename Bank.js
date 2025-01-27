@@ -10,7 +10,6 @@ class Bank {
 
     createAccount(name, initialDeposit){
         const newAccount = new Account(name, initialDeposit);
-        this.accounts.push(newAccount);
         return newAccount;
     }
 
@@ -62,8 +61,9 @@ class Account {
     transfer(amount, recipientAccount){
         if(amount > 0 && amount <= this.balance){
             this.withdraw(amount);
-            this.transactionHistory.push({ transactionType: 'Transfer', amount: amount, to: recipientAccount.name });
-            recipientAccount.deposit(amount);
+            this.recipientName = recipientAccount;
+            this.transactionHistory.push({ transactionType: 'Transfer', amount: amount, to: this.recipientName.name });
+            this.recipientName.deposit(amount);
             this.transactionHistory.push({ transactionType: 'Received', amount: amount, from: this.name });
         }
     }
