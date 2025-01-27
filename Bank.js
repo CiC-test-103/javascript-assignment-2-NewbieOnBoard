@@ -67,6 +67,9 @@ class Account {
             this.recipientName.deposit(amount);
             this.transactionHistory.push({ transactionType: 'Received', amount: amount, from: this.name });
         }
+        else{
+            console.log("Not enough funds.");
+        }
     }
     
     // Example: checkBalance()
@@ -87,11 +90,11 @@ function testBankOperations() {
     console.log('Accounts created:', johnAccount, janeAccount);
 
     // Perform some operations on John's account
-    johnAccount.deposit(0);
+    johnAccount.deposit(100);
     johnAccount.withdraw(200);
 
     // Perform a transfer from John to Jane
-    johnAccount.transfer(500, janeAccount);
+    johnAccount.transfer(300, janeAccount);
 
     // Check balances
     const johnFinalBalance = johnAccount.checkBalance();
