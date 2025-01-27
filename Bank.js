@@ -10,7 +10,6 @@ class Bank {
 
     createAccount(name, initialDeposit){
         const newAccount = new Account(name, initialDeposit);
-        this.accounts.push(newAccount);
         return newAccount;
     }
 
