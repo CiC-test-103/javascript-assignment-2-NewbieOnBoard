@@ -10,6 +10,7 @@ class Bank {
 
     createAccount(name, initialDeposit){
         const newAccount = new Account(name, initialDeposit);
+        this.accounts.push(newAccount);
         return newAccount;
     }
 
@@ -32,7 +33,7 @@ class Account {
             this.transactionHistory.push({ transactionType: 'Deposit', amount: amount });
         }
         else if(amount === 0){
-            console.log("0 deposit amount.");
+            console.log("You enter 0 deposit amount.");
         }
         else{
             console.log("Please enter valid deposit amount number.");
