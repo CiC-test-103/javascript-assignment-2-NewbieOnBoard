@@ -62,9 +62,8 @@ class Account {
     transfer(amount, recipientAccount){
         if(amount > 0 && amount <= this.balance){
             this.balance -= amount;
-            this.recipientName = recipientAccount;
-            this.transactionHistory.push({ transactionType: 'Transfer', amount: amount, to: this.recipientName.name });
-            this.recipientName.deposit(amount);
+            this.transactionHistory.push({ transactionType: 'Transfer', amount: amount, to: recipientAccount.name });
+            recipientAccount.balance += amount;
             this.transactionHistory.push({ transactionType: 'Received', amount: amount, from: this.name });
         }
         else{
@@ -85,12 +84,12 @@ function testBankOperations() {
     const bank = new Bank();
 
     // Create new accounts
-    const johnAccount = bank.createAccount('John Doe', 1200);
+    const johnAccount = bank.createAccount('John Doe', 1000);
     const janeAccount = bank.createAccount('Jane Doe', 500);
     console.log('Accounts created:', johnAccount, janeAccount);
 
     // Perform some operations on John's account
-    johnAccount.deposit(100);
+    johnAccount.deposit(500);
     johnAccount.withdraw(200);
 
     // Perform a transfer from John to Jane
