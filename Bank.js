@@ -60,7 +60,7 @@ class Account {
     // for account recieving { transactionType: 'Received', amount: 300, from: senderName }
     transfer(amount, recipientAccount){
         if(amount > 0 && amount <= this.balance){
-            this.withdraw(amount);
+            this.balance -= amount;
             this.recipientName = recipientAccount;
             this.transactionHistory.push({ transactionType: 'Transfer', amount: amount, to: this.recipientName.name });
             this.recipientName.deposit(amount);
