@@ -8,6 +8,12 @@ class Bank {
     // Add methods here:
     // Example: createAccount(name, initialDeposit)
 
+    createAccount(name, initialDeposit){
+        const newAccount = new Account(name, initialDeposit);
+        this.accounts.push(newAccount);
+        return newAccount;
+    }
+
 }
 
 // Account Class: Represents a single user's account
@@ -21,16 +27,51 @@ class Account {
     // Add methods here:
     // Example: deposit(amount) 
     // example data to be stored in transactionHistory { transactionType: 'Deposit', amount: 500 }
+    deposit(amount){
+        if(amount > 0){
+            this.balance += amount;
+            this.transactionHistory.push({ transactionType: 'Deposit', amount: amount });
+        }
+        else if(amount === 0){
+            console.log("0 deposit amount.");
+        }
+        else{
+            console.log("Please enter valid deposit amount number.");
+        }
+    }
 
     // Example: withdraw(amount)
     // example data to be stored in transactionHistory { transactionType: 'Withdrawal', amount: 200 }
+    withdraw(amount){
+        if(amount > 0 && amount <= this.balance){
+            this.balance -= amount;
+            this.transactionHistory.push({ transactionType: 'Withdrawal', amount: amount });
+        }
+        else if(amount === 0){
+            console.log("0 withdraw amount.")
+        }
+        else{
+            console.log("Please enter valid withdraw amount number.")
+        }
+    }
 
     // Example: transfer(amount, recipientAccount)
     // example data to be stored in transactionHistory:
     // for account sending { transactionType: 'Transfer', amount: 300, to: recipientName }
     // for account recieving { transactionType: 'Received', amount: 300, from: senderName }
+    transfer(amount, recipientAccount){
+        if(amount > 0 && amount <= this.balance){
+            this.withdraw(amount);
+            this.transactionHistory.push({ transactionType: 'Transfer', amount: amount, to: recipientAccount.name });
+            recipientAccount.deposit(amount);
+            this.transactionHistory.push({ transactionType: 'Received', amount: amount, from: this.name });
+        }
+    }
     
     // Example: checkBalance()
+    checkBalance(){
+        return this.balance;
+    }
 }
 
 //<-------------------------------DO NOT WRITE BELOW THIS LINE------------------------------>
@@ -40,16 +81,16 @@ function testBankOperations() {
     const bank = new Bank();
 
     // Create new accounts
-    const johnAccount = bank.createAccount('John Doe', 1000);
+    const johnAccount = bank.createAccount('John Doe', 1200);
     const janeAccount = bank.createAccount('Jane Doe', 500);
     console.log('Accounts created:', johnAccount, janeAccount);
 
     // Perform some operations on John's account
-    johnAccount.deposit(500);
+    johnAccount.deposit(0);
     johnAccount.withdraw(200);
 
     // Perform a transfer from John to Jane
-    johnAccount.transfer(300, janeAccount);
+    johnAccount.transfer(500, janeAccount);
 
     // Check balances
     const johnFinalBalance = johnAccount.checkBalance();
